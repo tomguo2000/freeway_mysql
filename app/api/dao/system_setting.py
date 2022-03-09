@@ -112,7 +112,9 @@ class SettingDAO:
 
         setting.value = data["value"]
 
-        setting.save_to_db()
+        print(f"setting的这个实例要准备保存了: {setting}")
+        aaa = setting.save_to_db()
+        print(f"aaa:{aaa}")
 
         return messages.SETTING_SUCCESSFULLY_UPDATED, HTTPStatus.OK
     #

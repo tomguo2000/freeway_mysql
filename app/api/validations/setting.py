@@ -31,7 +31,7 @@ def validate_setting_update_request_data(data):
     if "value" not in data:
         return {"code": 12000, "message": "value is missing"}
 
-    if include_dangerous_chars(data):
-            return messages.INVALID_INPUT
+    if include_dangerous_chars(data['value']):
+        return messages.INVALID_INPUT
 
     return {}

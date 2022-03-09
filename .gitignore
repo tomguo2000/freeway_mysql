@@ -2,3 +2,5 @@
 .idea
 log/
 local_data.db
+/app/schedulers/job_ranger.py
+/app/utils/maintenance/updateRoutePort.py

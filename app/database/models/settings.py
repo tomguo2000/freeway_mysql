@@ -76,6 +76,7 @@ class SettingModel(db.Model):
         """Adds a setting to the database."""
         db.session.add(self)
         db.session.commit()
+        return self.id
 
     def delete_from_db(self) -> None:
         """Deletes a setting from the database."""
