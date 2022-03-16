@@ -27,7 +27,7 @@ def init_ranger_scheduler():
         id="job_ranger",
         func=job_ranger_main,
         trigger="interval",
-        seconds=20,
+        seconds=2000,
         timezone="Asia/Shanghai",
         # replace_existing=True,
     )

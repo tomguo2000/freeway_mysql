@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+from app.database.db_types.JsonCustomType import JsonCustomType
 from app.database.sqlalchemy_extension import db
 
 class SettingModel(db.Model):
@@ -17,7 +18,8 @@ class SettingModel(db.Model):
 
     # setting data
     key = db.Column(db.String(256), unique=True)
-    value = db.Column(db.String(512), nullable=False)
+    # value = db.Column(db.String(512), nullable=False)
+    value = db.Column(JsonCustomType)
 
     # other info
     # creation_date = db.Column(db.DECIMAL(20,7))   # mysql正常，sqlite会丢失精度
@@ -50,7 +52,7 @@ class SettingModel(db.Model):
 
     def __repr__(self):
         """Returns the setting's key and value."""
-        return f"Setting key '{self.key}'. Value is '{self.value}'."
+        return f"Setting key {self.key}. Value is {self.value} ."
 
     @classmethod
     def find_by_key(cls, key: str) -> "SettingModel":
