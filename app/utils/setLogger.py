@@ -38,18 +38,3 @@ def init_logger(LOG_path='log/', LOG_basename='app', env='unknown'):
         # 添加到logger
         logger.addHandler(fh)
         logger.addHandler(ch)
-
-    # 额外增加一个 Email Handler， ERROR级log直接发邮件出来
-    mail_handler = SMTPHandler(
-        mailhost=('mail.enovatemotors.com', 587),
-        fromaddr='holodata@enovatemotors.com',
-        toaddrs=['guoliang@enovatemotors.com'],
-        subject=LOG_basename + ': Error',
-        secure=("", ""),
-        credentials=('holodata', '@123qwe')
-    )
-    mail_handler.setLevel(logging.ERROR)
-    mail_handler.setFormatter(logging.Formatter(
-        "[%(asctime)s][%(module)s:%(lineno)d][%(levelname)s][%(thread)d] - %(message)s"
-    ))
-    logger.addHandler(mail_handler)
