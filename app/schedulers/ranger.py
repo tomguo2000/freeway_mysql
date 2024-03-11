@@ -128,6 +128,7 @@ class DownloadURL:
             self._port = parsed_url.port if parsed_url.port else 80
 
         self.can_download = None
+        self.cert_expire_date = None
 
 
 class PaymentGW:
@@ -281,6 +282,7 @@ class Ranger:
 
     def checkDownloadURL(self):
         for item in self.download_urls:
+            # check download able
             try:
                 # 发送HEAD请求
                 response = requests.head(item.url, allow_redirects=True)
@@ -298,6 +300,13 @@ class Ranger:
             except requests.RequestException as e:
                 print(f"请求发生错误: {e}")
                 item.can_download = False
+
+            # check certification expire date
+            if item._scheme == 'https':
+                item.cert_expire_date = self.checkCertExpDate(item._domain, item._port)
+            else:
+                item.cert_expire_date = 'N/A'
+
 
 
     def checkPaymentGW(self):
@@ -552,7 +561,8 @@ class Ranger:
             c = {}
             c['url'] = node.url
             c['can_download'] = node.can_download
-            if c['can_download']:
+            c['cert_expire_date'] = node.cert_expire_date
+            if c['can_download'] and self.checkCertExp(c['cert_expire_date']):
                 c['result'] = 'ok'
             else:
                 c['result'] = 'ERROR'
